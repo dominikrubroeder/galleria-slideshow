@@ -20,8 +20,9 @@ export default function RootLayout({
       <body
         className={`${inter.className} max-w-[1440px] w-full mx-auto px-10 pb-10 grid gap-10`}
       >
-        <header className='py-10 w-full border-b'>
+        <header className='py-10 w-full border-b flex justify-between gap-4'>
           <Logo />
+          <button className='uppercase text-xs'>Start Slideshow</button>
         </header>
 
         {children}
