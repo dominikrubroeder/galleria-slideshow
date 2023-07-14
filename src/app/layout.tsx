@@ -16,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} max-w-[1440px] w-full mx-auto px-10`}>
+        <header className="py-10 w-full">Header</header>
+        {children}
+      </body>
     </html>
   )
 }
