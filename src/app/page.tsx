@@ -16,8 +16,6 @@ async function getData(): Promise<Painting[]> {
 export default async function Home() {
   const data = await getData();
 
-  console.log(data);
-
   return (
     <main className='w-full'>
       <ul className='grid gap-10 sm:grid-cols-2 lg:grid-cols-4'>
