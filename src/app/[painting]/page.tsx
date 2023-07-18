@@ -12,9 +12,11 @@ async function getData(paintingName: string): Promise<Painting> {
 
   const data: Painting[] = await res.json();
 
-  return data.find(
-    (currPainting) =>
-      currPainting.name.toLowerCase().replaceAll(' ', '-') === paintingName
+  return (
+    data.find(
+      (currPainting) =>
+        currPainting.name.toLowerCase().replaceAll(' ', '-') === paintingName
+    ) ?? data[0]
   );
 }
 
