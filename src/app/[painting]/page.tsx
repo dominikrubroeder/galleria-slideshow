@@ -1,5 +1,6 @@
 import { Painting } from '@/data/types';
 import Image from 'next/image';
+import GalleryBar from '../components/GalleryBar';
 
 async function getData(paintingName: string): Promise<Painting> {
   const res = await fetch('http://localhost:3000/data.json');
@@ -29,6 +30,8 @@ export default async function Page({
 
   return (
     <section className='grid gap-4 lg:grid-cols-2'>
+      <GalleryBar />
+
       <div className='relative'>
         <div className='relative'>
           <button className='uppercase tracking-widest text-xs bg-black text-white p-4 absolute bottom-4 left-4'>
