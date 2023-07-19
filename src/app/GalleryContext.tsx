@@ -14,7 +14,10 @@ interface Value {
 
 interface GalleryContextData {
   value: Value;
-  updateValue: (newValue: Value) => void;
+  updateValue: (value: Value) => void;
+  setIsPlaying: (isPlaying: boolean) => void;
+  updatePainting: (painting: Painting) => void;
+  nextPainting: () => void;
 }
 
 const GalleryContext = createContext<GalleryContextData>({
@@ -42,7 +45,10 @@ const GalleryContext = createContext<GalleryContextData>({
     playTimePerPainting: 10,
     playTimeProgress: 0,
   },
-  updateValue: () => {},
+  updateValue: (value: Value) => {},
+  setIsPlaying: (isPlaying: boolean) => {},
+  updatePainting: (painting: Painting) => {},
+  nextPainting: () => {},
 });
 
 export const useGalleryContext = () => useContext(GalleryContext);
@@ -75,16 +81,42 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
     playTimeProgress: 0,
   });
 
-  const updateValue = (newValue: Value) => {
-    setValue(newValue);
-  };
-
   // Function to update the counter
   const updatePlayTimeProgress = () => {
+    if (value.playTimeProgress >= 10) {
+      nextPainting();
+      return;
+    }
+
     setValue((previousState) => {
       return {
         ...previousState,
         playTimeProgress: previousState.playTimeProgress + 1,
+      };
+    });
+  };
+
+  const nextPainting = async () => {
+    const res = await fetch('http://localhost:3000/data.json');
+
+    // Recommendation: handle errors
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error('Failed to fetch data');
+    }
+
+    const data: Painting[] = await res.json();
+
+    const currentPaintingIndex = data.findIndex(
+      (currPainting) => currPainting.name === value.painting.name
+    );
+
+    setValue((previousState) => {
+      return {
+        ...previousState,
+        painting: data[currentPaintingIndex + 1],
+        isPlaying: true,
+        playTimeProgress: 0,
       };
     });
   };
@@ -102,7 +134,27 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
   useEffect(() => console.log(value), [value]);
 
   return (
-    <GalleryContext.Provider value={{ value, updateValue }}>
+    <GalleryContext.Provider
+      value={{
+        value,
+        updateValue: setValue,
+        setIsPlaying: (isPlaying: boolean) =>
+          setValue((previousState) => {
+            return {
+              ...previousState,
+              isPlaying,
+            };
+          }),
+        updatePainting: (painting: Painting) =>
+          setValue((previousState) => {
+            return {
+              ...previousState,
+              painting,
+            };
+          }),
+        nextPainting,
+      }}
+    >
       {children}
     </GalleryContext.Provider>
   );

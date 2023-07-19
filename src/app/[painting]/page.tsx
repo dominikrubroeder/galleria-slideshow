@@ -30,7 +30,7 @@ export default async function Page({
 
   return (
     <section className='grid gap-4 lg:grid-cols-2'>
-      <GalleryBar />
+      <GalleryBar painting={data} />
 
       <div className='relative'>
         <div className='relative'>

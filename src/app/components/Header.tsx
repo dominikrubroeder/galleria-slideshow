@@ -11,14 +11,7 @@ export default function Header() {
       <Logo />
       <button
         className='uppercase text-xs'
-        onClick={() =>
-          galleryCtx.updateValue({
-            painting: galleryCtx.value.painting,
-            isPlaying: true,
-            playTimePerPainting: 10,
-            playTimeProgress: galleryCtx.value.playTimeProgress,
-          })
-        }
+        onClick={() => galleryCtx.setIsPlaying(true)}
       >
         Start Slideshow
       </button>

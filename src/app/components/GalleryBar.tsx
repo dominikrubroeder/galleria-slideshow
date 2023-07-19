@@ -1,27 +1,46 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useAnimate } from 'framer-motion';
 import { useGalleryContext } from '../GalleryContext';
+import { Painting } from '@/data/types';
+import { useEffect } from 'react';
 
-export default function GalleryBar() {
+interface GalleryBarProps {
+  painting: Painting;
+}
+
+export default function GalleryBar({ painting }: GalleryBarProps) {
   const galleryCtx = useGalleryContext();
+  const [galleryProgressBar, animateGalleryProgressBar] = useAnimate();
+
+  useEffect(() => galleryCtx.updatePainting(painting), []);
+
+  useEffect(() => {
+    if (galleryCtx.value.isPlaying)
+      animateGalleryProgressBar(
+        galleryProgressBar.current,
+        { width: ['0%', '100%'] },
+        {
+          ease: 'linear',
+          duration: 10,
+          delay: 0.4,
+        }
+      );
+  }, [
+    animateGalleryProgressBar,
+    galleryProgressBar,
+    galleryCtx.value.isPlaying,
+    galleryCtx.value.painting,
+    galleryCtx.value.playTimePerPainting,
+  ]);
 
   return (
     <div className='fixed right-0 left-0 bottom-0 w-full bg-white z-50'>
       <div className='relative h-0.5 w-full bg-[#E5E5E5]'>
-        {galleryCtx.value.isPlaying && (
-          <motion.span
-            className='absolute left-0 bg-black h-full'
-            animate={{
-              width: [`0%`, '100%'],
-            }}
-            transition={{
-              ease: 'linear',
-              duration: galleryCtx.value.playTimePerPainting,
-              delay: 0.4,
-            }}
-          ></motion.span>
-        )}
+        <span
+          ref={galleryProgressBar}
+          className='absolute left-0 bg-black h-full'
+        ></span>
       </div>
 
       <div className='flex gap-4 justify-between p-4'>
@@ -50,7 +69,7 @@ export default function GalleryBar() {
 
           <div className='flex items-center gap-4'>
             <button>Prev</button>
-            <button>Next</button>
+            <button onClick={() => galleryCtx.nextPainting()}>Next</button>
           </div>
         </div>
       </div>
