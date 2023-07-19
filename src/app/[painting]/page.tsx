@@ -79,7 +79,7 @@ export default async function Page({
             target='_blank'
             className='underline uppercase text-xs text-[#7D7D7D]'
           >
-            Got to source
+            Go to source
           </a>
         </div>
       </div>
