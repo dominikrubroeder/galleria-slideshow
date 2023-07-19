@@ -69,6 +69,8 @@ export default function GalleryBar({ painting }: GalleryBarProps) {
                   playTimeProgress: galleryCtx.value.playTimeProgress,
                 })
               }
+              disabled={!galleryCtx.value.isPlaying}
+              className='disabled:opacity-20 disabled:cursor-not-allowed'
             >
               Stop
             </button>
