@@ -2,6 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Libre_Baskerville } from 'next/font/google';
 import Logo from './components/Logo';
+import { Providers } from './providers';
+import Header from './components/Header';
 
 const libre = Libre_Baskerville({
   weight: '400',
@@ -25,12 +27,10 @@ export default function RootLayout({
       <body
         className={`${libre.className} max-w-[1440px] w-full mx-auto px-10 pb-10 grid gap-10`}
       >
-        <header className='py-10 w-full border-b flex justify-between gap-4'>
-          <Logo />
-          <button className='uppercase text-xs'>Start Slideshow</button>
-        </header>
-
-        {children}
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

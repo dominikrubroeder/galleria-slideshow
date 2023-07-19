@@ -34,22 +34,25 @@ export default async function Page({
 
       <div className='relative'>
         <div className='relative'>
-          <button className='uppercase tracking-widest text-xs bg-black text-white p-4 absolute bottom-4 left-4'>
+          <button className='uppercase tracking-widest text-xs bg-black text-white p-4 absolute top-4 left-4 lg:top-auto lg:bottom-4'>
             View image
           </button>
 
-          <Image
-            src={data.images.hero.large}
-            alt={data.name}
-            width='475'
-            height='475'
-            className='object-fit'
-          />
+          <div className='relative max-w-xs w-full h-[320px]'>
+            <Image
+              src={data.images.hero.large}
+              alt={data.name}
+              layout='fill'
+              objectFit='contain'
+            />
+          </div>
         </div>
 
-        <div className='absolute top-0 right-0 flex h-[110%] justify-between flex-col translate-x-1/4'>
-          <div className=' bg-white p-16 pt-0 w-[23.75rem] grid gap-6'>
-            <h1 className='leading-none text-[3.5rem]'>{data.name}</h1>
+        <div className='-mt-24 lg:mt-0 lg:flex lg:justify-between lg:flex-col lg:translate-x-1/4 lg:top-0 lg:right-0 lg:h-[110%]'>
+          <div className='bg-white p-16 pt-0 w-[23.75rem] grid gap-6'>
+            <h1 className='leading-none text-2xl lg:text-[3.5rem]'>
+              {data.name}
+            </h1>
             <h3 className='text-[#7D7D7D]'>{data.artist.name}</h3>
           </div>
 
@@ -64,7 +67,7 @@ export default async function Page({
       </div>
 
       <div className='relative'>
-        <div className='text-[12.5rem] absolute top-0 right-0 leading-none text-[#F3F3F3]'>
+        <div className='leading-none text-[#F3F3F3] text-[6.25rem] lg:absolute lg:top-0 lg:right-0 lg:text-[12.5rem]'>
           {data.year}
         </div>
 
