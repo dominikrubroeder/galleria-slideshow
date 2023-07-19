@@ -4,6 +4,7 @@ import { useAnimate } from 'framer-motion';
 import { useGalleryContext } from '../GalleryContext';
 import { Painting } from '@/data/types';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface GalleryBarProps {
   painting: Painting;
@@ -11,7 +12,9 @@ interface GalleryBarProps {
 
 export default function GalleryBar({ painting }: GalleryBarProps) {
   const galleryCtx = useGalleryContext();
+  const router = useRouter();
   const [galleryProgressBar, animateGalleryProgressBar] = useAnimate();
+  const [fade, animateFade] = useAnimate();
 
   useEffect(() => galleryCtx.updatePainting(painting), []);
 
@@ -34,6 +37,14 @@ export default function GalleryBar({ painting }: GalleryBarProps) {
     galleryCtx.value.playTimePerPainting,
   ]);
 
+  useEffect(() => {
+    animateFade(
+      fade.current,
+      { x: [-16, 0], opacity: [0, 1] },
+      { duration: 1 }
+    );
+  }, [galleryCtx.value.painting]);
+
   return (
     <div className='fixed right-0 left-0 bottom-0 w-full bg-white z-50'>
       <div className='relative h-0.5 w-full bg-[#E5E5E5]'>
@@ -44,7 +55,7 @@ export default function GalleryBar({ painting }: GalleryBarProps) {
       </div>
 
       <div className='flex gap-4 justify-between p-4'>
-        <div className='grid gap-1'>
+        <div ref={fade} className='grid gap-1'>
           <h2 className='text-lg'>{galleryCtx.value.painting.name}</h2>
           <p className='text-sm'>{galleryCtx.value.painting.artist.name}</p>
         </div>
