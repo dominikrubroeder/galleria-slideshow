@@ -1,4 +1,5 @@
 import { Painting } from '@/data/types';
+import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 interface GalleryContextProviderType {
@@ -14,7 +15,7 @@ interface Value {
 
 interface GalleryContextData {
   value: Value;
-  updateValue: (value: Value) => void;
+  update: (value: Value) => void;
   setIsPlaying: (isPlaying: boolean) => void;
   updatePainting: (painting: Painting) => void;
   nextPainting: () => void;
@@ -45,7 +46,7 @@ const GalleryContext = createContext<GalleryContextData>({
     playTimePerPainting: 10,
     playTimeProgress: 0,
   },
-  updateValue: (value: Value) => {},
+  update: (value: Value) => {},
   setIsPlaying: (isPlaying: boolean) => {},
   updatePainting: (painting: Painting) => {},
   nextPainting: () => {},
@@ -56,6 +57,8 @@ export const useGalleryContext = () => useContext(GalleryContext);
 export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
   children,
 }) => {
+  const pathname = usePathname();
+
   const [value, setValue] = useState({
     painting: {
       name: 'Starry Night',
@@ -111,6 +114,20 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
       (currPainting) => currPainting.name === value.painting.name
     );
 
+    if (currentPaintingIndex === -1) {
+      console.log('yes');
+      setValue((previousState) => {
+        return {
+          ...previousState,
+          painting: data[0],
+          isPlaying: true,
+          playTimeProgress: 0,
+        };
+      });
+
+      return;
+    }
+
     setValue((previousState) => {
       return {
         ...previousState,
@@ -131,13 +148,20 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
     return () => clearInterval(intervalId);
   }, [value]);
 
+  useEffect(() => {
+    if (pathname === '/')
+      setValue((previousState) => {
+        return { ...previousState, isPlaying: false, playTimeProgress: 0 };
+      });
+  }, [pathname]);
+
   useEffect(() => console.log(value), [value]);
 
   return (
     <GalleryContext.Provider
       value={{
         value,
-        updateValue: setValue,
+        update: setValue,
         setIsPlaying: (isPlaying: boolean) =>
           setValue((previousState) => {
             return {
