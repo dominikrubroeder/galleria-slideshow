@@ -4,7 +4,6 @@ import { useAnimate } from 'framer-motion';
 import { useGalleryContext } from '../GalleryContext';
 import { Painting } from '@/data/types';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface GalleryBarProps {
   painting: Painting;
@@ -12,7 +11,6 @@ interface GalleryBarProps {
 
 export default function GalleryBar({ painting }: GalleryBarProps) {
   const galleryCtx = useGalleryContext();
-  const router = useRouter();
   const [galleryProgressBar, animateGalleryProgressBar] = useAnimate();
   const [fade, animateFade] = useAnimate();
 
@@ -64,7 +62,7 @@ export default function GalleryBar({ painting }: GalleryBarProps) {
           <div>
             <button
               onClick={() =>
-                galleryCtx.updateValue({
+                galleryCtx.update({
                   painting: galleryCtx.value.painting,
                   isPlaying: false,
                   playTimePerPainting: 10,
