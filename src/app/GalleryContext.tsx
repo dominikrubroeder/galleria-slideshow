@@ -1,3 +1,4 @@
+import { getData } from '@/data/functions';
 import { Painting } from '@/data/types';
 import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
@@ -84,7 +85,15 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
     playTimeProgress: 0,
   });
 
-  // Function to update the counter
+  const updatePainting = (painting: Painting) => {
+    setValue((previousState) => {
+      return {
+        ...previousState,
+        painting,
+      };
+    });
+  };
+
   const updatePlayTimeProgress = () => {
     if (value.playTimeProgress >= 10) {
       nextPainting();
@@ -100,42 +109,37 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
   };
 
   const nextPainting = async () => {
-    const res = await fetch('http://localhost:3000/data.json');
+    console.log('nextPainting');
 
-    // Recommendation: handle errors
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data');
-    }
+    const data = await getData();
 
-    const data: Painting[] = await res.json();
+    if (Array.isArray(data)) {
+      const currentPaintingIndex = data?.findIndex(
+        (currPainting) => currPainting.name === value.painting.name
+      );
 
-    const currentPaintingIndex = data.findIndex(
-      (currPainting) => currPainting.name === value.painting.name
-    );
+      if (currentPaintingIndex === -1) {
+        setValue((previousState) => {
+          return {
+            ...previousState,
+            painting: data[0],
+            isPlaying: true,
+            playTimeProgress: 0,
+          };
+        });
 
-    if (currentPaintingIndex === -1) {
-      console.log('yes');
+        return;
+      }
+
       setValue((previousState) => {
         return {
           ...previousState,
-          painting: data[0],
+          painting: data[currentPaintingIndex + 1],
           isPlaying: true,
           playTimeProgress: 0,
         };
       });
-
-      return;
     }
-
-    setValue((previousState) => {
-      return {
-        ...previousState,
-        painting: data[currentPaintingIndex + 1],
-        isPlaying: true,
-        playTimeProgress: 0,
-      };
-    });
   };
 
   // Start the interval when the component mounts
@@ -146,13 +150,32 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [value]);
+  }, [value, updatePlayTimeProgress]);
 
   useEffect(() => {
-    if (pathname === '/')
+    if (pathname === '/') {
       setValue((previousState) => {
         return { ...previousState, isPlaying: false, playTimeProgress: 0 };
       });
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const data = await getData(pathname);
+
+        if (!Array.isArray(data) && data !== undefined)
+          setValue((previousState) => {
+            return {
+              ...previousState,
+              painting: data,
+            };
+          });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
   }, [pathname]);
 
   useEffect(() => console.log(value), [value]);
@@ -162,18 +185,12 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
       value={{
         value,
         update: setValue,
+        updatePainting,
         setIsPlaying: (isPlaying: boolean) =>
           setValue((previousState) => {
             return {
               ...previousState,
               isPlaying,
-            };
-          }),
-        updatePainting: (painting: Painting) =>
-          setValue((previousState) => {
-            return {
-              ...previousState,
-              painting,
             };
           }),
         nextPainting,

@@ -5,11 +5,11 @@ import { useGalleryContext } from '../GalleryContext';
 import { Painting } from '@/data/types';
 import { useEffect } from 'react';
 
-interface GalleryBarProps {
+interface GalleryControlsProps {
   painting: Painting;
 }
 
-export default function GalleryBar({ painting }: GalleryBarProps) {
+export default function GalleryControls({ painting }: GalleryControlsProps) {
   const galleryCtx = useGalleryContext();
   const [galleryProgressBar, animateGalleryProgressBar] = useAnimate();
   const [fade, animateFade] = useAnimate();
