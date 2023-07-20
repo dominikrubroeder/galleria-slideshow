@@ -22,7 +22,7 @@ interface GalleryContextData {
   nextPainting: () => void;
 }
 
-const GalleryContext = createContext<GalleryContextData>({
+const GalleryProvider = createContext<GalleryContextData>({
   value: {
     painting: {
       name: 'Starry Night',
@@ -53,7 +53,7 @@ const GalleryContext = createContext<GalleryContextData>({
   nextPainting: () => {},
 });
 
-export const useGalleryContext = () => useContext(GalleryContext);
+export const useGalleryContext = () => useContext(GalleryProvider);
 
 export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
   children,
@@ -175,7 +175,7 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
   }, [pathname]);
 
   return (
-    <GalleryContext.Provider
+    <GalleryProvider.Provider
       value={{
         value,
         update: setValue,
@@ -191,6 +191,6 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
       }}
     >
       {children}
-    </GalleryContext.Provider>
+    </GalleryProvider.Provider>
   );
 };

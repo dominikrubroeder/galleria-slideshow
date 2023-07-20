@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { GalleryContextProvider } from './GalleryContext';
+import { GalleryContextProvider } from './context/GalleryProvider';
 
 interface ProvidersProps {
   children: React.ReactNode;

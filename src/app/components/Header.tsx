@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useGalleryContext } from '../GalleryContext';
+import { useGalleryContext } from '../context/GalleryProvider';
 import Logo from './Logo';
 
 export default function Header() {

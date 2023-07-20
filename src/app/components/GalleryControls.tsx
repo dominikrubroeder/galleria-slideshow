@@ -1,7 +1,7 @@
 'use client';
 
 import { useAnimate } from 'framer-motion';
-import { useGalleryContext } from '../GalleryContext';
+import { useGalleryContext } from '../context/GalleryProvider';
 import { Painting } from '@/data/types';
 import { useEffect } from 'react';
 

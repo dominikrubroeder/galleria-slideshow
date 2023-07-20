@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import GalleryControls from '../components/GalleryControls';
-import { useGalleryContext } from '../GalleryContext';
+import { useGalleryContext } from '../context/GalleryProvider';
 import { useAnimate } from 'framer-motion';
 import { useEffect } from 'react';
 
