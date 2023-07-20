@@ -58,30 +58,9 @@ export default function GalleryControls({ painting }: GalleryControlsProps) {
           <p className='text-sm'>{galleryCtx.value.painting.artist.name}</p>
         </div>
 
-        <div className='flex items-center gap-6'>
-          <div>
-            <button
-              onClick={() =>
-                galleryCtx.update({
-                  painting: galleryCtx.value.painting,
-                  isPlaying: false,
-                  playTimePerPainting: 10,
-                  playTimeProgress: galleryCtx.value.playTimeProgress,
-                })
-              }
-              disabled={!galleryCtx.value.isPlaying}
-              className='disabled:opacity-20 disabled:cursor-not-allowed'
-            >
-              Stop
-            </button>
-          </div>
-
-          <div className='w-[1px] h-4 bg-gray-200'></div>
-
-          <div className='flex items-center gap-4'>
-            <button>Prev</button>
-            <button onClick={() => galleryCtx.nextPainting()}>Next</button>
-          </div>
+        <div className='flex items-center gap-4'>
+          <button>Prev</button>
+          <button onClick={() => galleryCtx.nextPainting()}>Next</button>
         </div>
       </div>
     </div>

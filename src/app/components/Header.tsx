@@ -11,14 +11,15 @@ export default function Header() {
 
   const handleClick = () => {
     if (pathname === '/') router.push('/starry-night');
-    galleryCtx.setIsPlaying(true);
+    galleryCtx.setIsPlaying(!galleryCtx.value.isPlaying);
   };
 
   return (
     <header className='py-10 w-full border-b flex justify-between gap-4'>
       <Logo />
+
       <button className='uppercase text-xs' onClick={handleClick}>
-        Start Slideshow
+        {galleryCtx.value.isPlaying ? 'Stop' : 'Start'} Slideshow
       </button>
     </header>
   );
