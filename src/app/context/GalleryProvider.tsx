@@ -19,7 +19,7 @@ interface GalleryContextData {
   update: (value: Value) => void;
   setIsPlaying: (isPlaying: boolean) => void;
   updatePainting: (painting: Painting) => void;
-  nextPainting: () => void;
+  navigateSlideshow: (direction: 'previousPainting' | 'nextPainting') => void;
 }
 
 const GalleryProvider = createContext<GalleryContextData>({
@@ -50,7 +50,7 @@ const GalleryProvider = createContext<GalleryContextData>({
   update: (value: Value) => {},
   setIsPlaying: (isPlaying: boolean) => {},
   updatePainting: (painting: Painting) => {},
-  nextPainting: () => {},
+  navigateSlideshow: (direction: 'previousPainting' | 'nextPainting') => {},
 });
 
 export const useGalleryContext = () => useContext(GalleryProvider);
@@ -96,7 +96,7 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
 
   const updatePlayTimeProgress = () => {
     if (value.playTimeProgress >= 10) {
-      nextPainting();
+      navigateSlideshow('nextPainting');
       return;
     }
 
@@ -108,7 +108,9 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
     });
   };
 
-  const nextPainting = async () => {
+  const navigateSlideshow = async (
+    direction: 'previousPainting' | 'nextPainting'
+  ) => {
     const data = await getData();
 
     if (Array.isArray(data)) {
@@ -132,7 +134,12 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
       setValue((previousState) => {
         return {
           ...previousState,
-          painting: data[currentPaintingIndex + 1],
+          painting:
+            data[
+              direction === 'previousPainting'
+                ? currentPaintingIndex - 1
+                : currentPaintingIndex + 1
+            ],
           isPlaying: true,
           playTimeProgress: 0,
         };
@@ -187,7 +194,7 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
               isPlaying,
             };
           }),
-        nextPainting,
+        navigateSlideshow,
       }}
     >
       {children}

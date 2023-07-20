@@ -59,8 +59,14 @@ export default function GalleryControls({ painting }: GalleryControlsProps) {
         </div>
 
         <div className='flex items-center gap-4'>
-          <button>Prev</button>
-          <button onClick={() => galleryCtx.nextPainting()}>Next</button>
+          <button
+            onClick={() => galleryCtx.navigateSlideshow('previousPainting')}
+          >
+            Prev
+          </button>
+          <button onClick={() => galleryCtx.navigateSlideshow('nextPainting')}>
+            Next
+          </button>
         </div>
       </div>
     </div>
