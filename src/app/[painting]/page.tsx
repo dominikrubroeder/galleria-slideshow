@@ -23,7 +23,7 @@ export default function Page() {
     <section className='grid gap-4 xl:grid-cols-2'>
       <GalleryControls painting={painting} />
 
-      <div className='relative'>
+      <div className='relative lg:grid lg:grid-cols-2 xl:block'>
         <div className='relative'>
           <button className='uppercase tracking-widest text-xs bg-black text-white p-4 absolute top-4 left-4 z-50 md:top-auto md:bottom-4 xl:top-auto xl:bottom-4'>
             View image
@@ -40,12 +40,12 @@ export default function Page() {
           </div>
         </div>
 
-        <div className='-translate-y-1/4 md:-translate-y-0 md:-translate-x-[16%] md:absolute md:right-0 md:top-0'>
+        <div className='-translate-y-1/4 md:-translate-y-0 md:-translate-x-[16%] md:absolute md:right-0 md:top-0 lg:relative lg:mx-auto xl:absolute xl:-translate-x-[0%]'>
           <div
             ref={fade}
             className='relative bg-white w-[280px] z-50 p-6 md:p-16 md:w-[23.75rem]'
           >
-            <h1 className='leading-none text-2xl md:text-[3.5rem]'>
+            <h1 className='leading-none text-2xl md:text-[3.5rem] mb-2'>
               {painting.name}
             </h1>
             <h3 className='text-[#7D7D7D]'>{painting.artist.name}</h3>
