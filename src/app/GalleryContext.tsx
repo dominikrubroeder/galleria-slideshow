@@ -109,8 +109,6 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
   };
 
   const nextPainting = async () => {
-    console.log('nextPainting');
-
     const data = await getData();
 
     if (Array.isArray(data)) {
@@ -142,13 +140,11 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
     }
   };
 
-  // Start the interval when the component mounts
   useEffect(() => {
     if (!value.isPlaying) return;
 
     const intervalId = setInterval(updatePlayTimeProgress, 1000);
 
-    // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, [value, updatePlayTimeProgress]);
 
@@ -177,8 +173,6 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
     };
     fetchData();
   }, [pathname]);
-
-  useEffect(() => console.log(value), [value]);
 
   return (
     <GalleryContext.Provider
