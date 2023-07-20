@@ -20,32 +20,32 @@ export default function Page() {
   }, [galleryCtx.value.painting, animateFade, fade]);
 
   return (
-    <section className='grid gap-4 lg:grid-cols-2'>
+    <section className='grid gap-4 xl:grid-cols-2'>
       <GalleryControls painting={painting} />
 
       <div className='relative'>
         <div className='relative'>
-          <button className='uppercase tracking-widest text-xs bg-black text-white p-4 absolute top-4 left-4 lg:top-auto lg:bottom-4'>
+          <button className='uppercase tracking-widest text-xs bg-black text-white p-4 absolute top-4 left-4 z-50 md:top-auto md:bottom-4 xl:top-auto xl:bottom-4'>
             View image
           </button>
 
-          <div className='relative max-w-xs w-full h-[320px]'>
+          <div className='relative h-72 md:w-[29.6785rem] md:h-[35rem]'>
             <Image
               src={painting.images.hero.large}
               alt={painting.name}
               fill
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-              className='object-contain'
+              className='object-cover bg-center'
             />
           </div>
         </div>
 
-        <div className='-mt-24 lg:mt-0 lg:flex lg:justify-between lg:flex-col lg:translate-x-1/4 lg:top-0 lg:right-0 lg:h-[110%]'>
+        <div className='-translate-y-1/4 md:-translate-y-0 md:-translate-x-[16%] md:absolute md:right-0 md:top-0'>
           <div
             ref={fade}
-            className='bg-white p-16 pt-0 w-[23.75rem] grid gap-6'
+            className='relative bg-white w-[280px] z-50 p-6 md:p-16 md:w-[23.75rem]'
           >
-            <h1 className='leading-none text-2xl lg:text-[3.5rem]'>
+            <h1 className='leading-none text-2xl md:text-[3.5rem]'>
               {painting.name}
             </h1>
             <h3 className='text-[#7D7D7D]'>{painting.artist.name}</h3>
@@ -56,17 +56,17 @@ export default function Page() {
             alt={painting.name}
             width='128'
             height='128'
-            className='object-fit mx-auto'
+            className='w-16 h-16 object-fit bg-center md:w-32 md:h-32 md:ml-auto'
           />
         </div>
       </div>
 
-      <div className='relative'>
-        <div className='leading-none text-[#F3F3F3] text-[6.25rem] lg:absolute lg:top-0 lg:right-0 lg:text-[12.5rem]'>
+      <div className='relative -mt-20 md:mt-16'>
+        <div className='text-right leading-none text-[#F3F3F3] text-[6.25rem] md:text-[12.5rem] md:text-left xl:absolute xl:top-0 xl:right-0'>
           {painting.year}
         </div>
 
-        <div className='mt-32 max-w-[21.875rem] w-full mx-auto z-10 relative grid gap-20'>
+        <div className='-mt-8 max-w-[21.875rem] w-full text-[#7D7D7D] mx-auto z-10 relative grid gap-20 md:max-w-md md:-mt-24 xl:mt-32'>
           {painting.description}
 
           <a

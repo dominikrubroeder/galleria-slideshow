@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${libre.className} max-w-[1440px] w-full mx-auto px-10 pb-10 grid gap-10`}
+        className={`${libre.className} max-w-[1440px] w-full mx-auto px-4 pb-40 grid gap-10 sm:px-10`}
       >
         <Providers>
           <Header />

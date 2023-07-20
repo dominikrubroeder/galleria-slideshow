@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <main className='w-full'>
-      <ul className='grid gap-10 sm:grid-cols-2 lg:grid-cols-4'>
+      <ul className='grid gap-10 sm:grid-cols-2 xl:grid-cols-4'>
         {data.map((painting) => (
           <li key={painting.name}>
             <Link href={`/${painting.name.toLowerCase().replaceAll(' ', '-')}`}>
