@@ -65,15 +65,17 @@ export default function GalleryControls({ painting }: GalleryControlsProps) {
               min={1}
               max={10}
               required
-              className='border rounded px-1 text-center'
+              className='border rounded px-1 text-center bg-gray-100 disabled:cursor-not-allowed'
               value={
                 galleryCtx.value.isPlaying
-                  ? galleryCtx.value.playTimeProgress
+                  ? galleryCtx.value.playTimePerPainting -
+                    galleryCtx.value.playTimeProgress
                   : galleryCtx.value.playTimePerPainting
               }
               onChange={(e) =>
                 galleryCtx.setPlayTimePerPainting(+e.target.value)
               }
+              disabled={galleryCtx.value.isPlaying ? true : false}
             />
           </div>
 
