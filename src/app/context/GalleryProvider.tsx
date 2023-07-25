@@ -20,6 +20,7 @@ interface GalleryContextData {
   setIsPlaying: (isPlaying: boolean) => void;
   updatePainting: (painting: Painting) => void;
   navigateSlideshow: (direction: 'previousPainting' | 'nextPainting') => void;
+  setPlayTimePerPainting: (playTimePerPainting: number) => void;
 }
 
 const GalleryProvider = createContext<GalleryContextData>({
@@ -51,6 +52,7 @@ const GalleryProvider = createContext<GalleryContextData>({
   setIsPlaying: (isPlaying: boolean) => {},
   updatePainting: (painting: Painting) => {},
   navigateSlideshow: (direction: 'previousPainting' | 'nextPainting') => {},
+  setPlayTimePerPainting: (playTimePerPainting: number) => {},
 });
 
 export const useGalleryContext = () => useContext(GalleryProvider);
@@ -95,7 +97,7 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
   };
 
   const updatePlayTimeProgress = () => {
-    if (value.playTimeProgress >= 10) {
+    if (value.playTimeProgress >= value.playTimePerPainting) {
       navigateSlideshow('nextPainting');
       return;
     }
@@ -195,6 +197,13 @@ export const GalleryContextProvider: React.FC<GalleryContextProviderType> = ({
             };
           }),
         navigateSlideshow,
+        setPlayTimePerPainting: (playTimePerPainting: number) =>
+          setValue((previousState) => {
+            return {
+              ...previousState,
+              playTimePerPainting,
+            };
+          }),
       }}
     >
       {children}

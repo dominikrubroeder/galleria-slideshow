@@ -23,7 +23,7 @@ export default function GalleryControls({ painting }: GalleryControlsProps) {
         { width: ['0%', '100%'] },
         {
           ease: 'linear',
-          duration: 10,
+          duration: galleryCtx.value.playTimePerPainting,
           delay: 0.4,
         }
       );
@@ -59,6 +59,26 @@ export default function GalleryControls({ painting }: GalleryControlsProps) {
         </div>
 
         <div className='flex items-center gap-4'>
+          <div className='flex gap-1'>
+            <input
+              type='number'
+              min={1}
+              max={10}
+              required
+              className='border rounded px-1 text-center'
+              value={
+                galleryCtx.value.isPlaying
+                  ? galleryCtx.value.playTimeProgress
+                  : galleryCtx.value.playTimePerPainting
+              }
+              onChange={(e) =>
+                galleryCtx.setPlayTimePerPainting(+e.target.value)
+              }
+            />
+          </div>
+
+          <div className='w-[1px] h-6 bg-black opacity-10'></div>
+
           <button
             onClick={() => galleryCtx.navigateSlideshow('previousPainting')}
           >
