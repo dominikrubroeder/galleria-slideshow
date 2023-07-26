@@ -4,7 +4,7 @@ import { Painting } from './types';
 export const getData = async (
   identifier?: string
 ): Promise<Painting[] | Painting | undefined> => {
-  const res = await fetch(`${config.vercelHostName}/data.json`);
+  const res = await fetch(`https://${config.vercelHostName}/data.json`);
 
   // Recommendation: handle errors
   if (!res.ok) {
