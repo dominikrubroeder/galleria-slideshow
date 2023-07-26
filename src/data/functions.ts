@@ -1,9 +1,10 @@
+import { config } from '@/config';
 import { Painting } from './types';
 
 export const getData = async (
   identifier?: string
 ): Promise<Painting[] | Painting | undefined> => {
-  const res = await fetch('http://localhost:3000/data.json');
+  const res = await fetch(`${config.hostName}/data.json`);
 
   // Recommendation: handle errors
   if (!res.ok) {
