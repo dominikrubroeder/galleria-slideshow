@@ -52,13 +52,13 @@ export default function GalleryControls({ painting }: GalleryControlsProps) {
         ></span>
       </div>
 
-      <div className='flex gap-4 justify-between p-4'>
+      <div className='grid gap-1 p-4 sm:flex sm:gap-4 sm:justify-between '>
         <div ref={fade} className='grid gap-1'>
           <h2 className='text-lg'>{galleryCtx.value.painting.name}</h2>
           <p className='text-sm'>{galleryCtx.value.painting.artist.name}</p>
         </div>
 
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-4 justify-end sm:justify-start'>
           <div className='flex gap-1'>
             <input
               type='number'
@@ -81,14 +81,18 @@ export default function GalleryControls({ painting }: GalleryControlsProps) {
 
           <div className='w-[1px] h-6 bg-black opacity-10'></div>
 
-          <button
-            onClick={() => galleryCtx.navigateSlideshow('previousPainting')}
-          >
-            Prev
-          </button>
-          <button onClick={() => galleryCtx.navigateSlideshow('nextPainting')}>
-            Next
-          </button>
+          <div className='flex gap-2 items-center'>
+            <button
+              onClick={() => galleryCtx.navigateSlideshow('previousPainting')}
+            >
+              Prev
+            </button>
+            <button
+              onClick={() => galleryCtx.navigateSlideshow('nextPainting')}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
