@@ -1,8 +1,9 @@
+import { config } from '@/config';
 import { Painting } from '@/data/types';
 import Link from 'next/link';
 
 async function getData(): Promise<Painting[]> {
-  const res = await fetch('http://localhost:3000/data.json');
+  const res = await fetch(`${config.hostName}/data.json`);
 
   // Recommendation: handle errors
   if (!res.ok) {
